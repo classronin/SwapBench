@@ -21,22 +21,22 @@
 
 ## 安装运行
 
-- NVIDIA 显卡 + `onnxruntime-gpu`；无 N 卡时可改用 CPU 版 `onnxruntime`（速度慢一些）
-`onnxruntime-gpu` 需对应 CUDA 版本。
+- NVIDIA 显卡 + `onnxruntime-gpu`, 需对应 CUDA 版本。
+- 无 N 卡时可改用 CPU 版 `onnxruntime`（速度慢一些）
+- 需要系统 PATH 中有 `ffmpeg`（只负责编码视频与封装音轨，推理仍是本地模型）。
 
 ```powershell
 git clone https://github.com/ClassRonin/SwapBench.git
 cd SwapBench
 
 uv venv
-uv pip install -r requirements.txt # 
+uv pip install -r requirements.txt
 uv run main.py
 ```
 
-
 ## 模型准备
 
-模型不随仓库分发，请自行下载后放入程序目录的 `models\`（路径固定，程序不会联网下载）：
+下载后放入程序目录的 `models\`：
 
 ```
 models/
@@ -51,23 +51,12 @@ models/
 
 - 国外：[inswapper_128.onnx](https://huggingface.co/ezioruan/inswapper_128.onnx/resolve/main/inswapper_128.onnx)
 - 国内：[inswapper_128.onnx](https://hf-mirror.com/ezioruan/inswapper_128.onnx/resolve/main/inswapper_128.onnx)
-MD5:a3a155b90354160350efd66fed6b3d80
-SHA256:e4a3f08c753cb72d04e10aa0f7dbe3deebbf39567d4ead6dce08e98aa49e16af
 
 - 国外：[GFPGANv1.4.onnx](https://huggingface.co/Neus/GFPGANv1.4/resolve/main/GFPGANv1.4.onnx)
 - 国内：[GFPGANv1.4.onnx](https://hf-mirror.com/Neus/GFPGANv1.4/resolve/main/GFPGANv1.4.onnx)
 
 - 国外：[xseg.onnx](https://github.com/yakhyo/face-segmentation/releases/download/weights/xseg.onnx)
 - 国内：[xseg.onnx](https://gh-proxy.com/https://github.com/yakhyo/face-segmentation/releases/download/weights/xseg.onnx)
-
-
-- 需要系统 PATH 中有 `ffmpeg`（只负责编码视频与封装音轨，推理仍是本地模型）。
-- 逐帧检测 + 换脸，输出保持原视频的分辨率与帧率；检测不到人脸或单帧失败时原样输出该帧。
-- 处理中显示进度、帧率和剩余时间；`Ctrl+C` / `Ctrl+Break` 可中断，半成品 `.part.mp4` 会被删除，
-  上一次的成片不会被破坏。
-- 其它参数：`--face-index`（多人时替换第几张脸）、`--det-every`（每 N 帧检测一次，默认 1）、
-  `--crf`（画质，默认 18）、`--no-audio`；遮罩参数与图片命令行完全一致。
-- 1080p 视频约 0.5–1 s/帧（开启 GFPGAN 与遮罩；`--no-restorer` 可再快一倍）。
 
 ### 快捷键
 
@@ -84,8 +73,12 @@ SHA256:e4a3f08c753cb72d04e10aa0f7dbe3deebbf39567d4ead6dce08e98aa49e16af
 | 滚轮 / 拖动 | 视图内缩放 / 平移 |
 | 左中分隔条 | 悬停出现 ↔ 光标，按住拖动调整左栏宽度 |
 
+---
+
 ![ ](https://classronin.github.io/picx-images-hosting/1.5trubb4zme.webp)
 ![ ](https://classronin.github.io/picx-images-hosting/0.1zj2scn1p1.webp)
+
+---
 
 ## 致谢
 
